@@ -23,13 +23,19 @@
     <nav id="main-nav">
         <div class="nav-container">
             <a href="#" class="logo" id="nav-logo-link">HS<span>.</span></a>
-            <ul class="nav-links">
-                <li><a href="#about" id="nav-about-link">About</a></li>
-                <li><a href="#skills" id="nav-skills-link">Skills</a></li>
-                <li><a href="#projects" id="nav-projects-link">Projects</a></li>
-                <li><a href="commit_flow.html" id="nav-flowchart-link"><i class="fa-solid fa-code-branch" style="margin-right: 5px;"></i>Git Flow</a></li>
-                <li><a href="#contact" id="nav-contact-link">Contact</a></li>
-            </ul>
+            <div style="display: flex; align-items: center; gap: 2rem;">
+                <ul class="nav-links">
+                    <li><a href="#about" id="nav-about-link">About</a></li>
+                    <li><a href="#skills" id="nav-skills-link">Skills</a></li>
+                    <li><a href="#projects" id="nav-projects-link">Projects</a></li>
+                    <li><a href="commit_flow.html" id="nav-flowchart-link"><i class="fa-solid fa-code-branch" style="margin-right: 5px;"></i>Git Flow</a></li>
+                    <li><a href="#contact" id="nav-contact-link">Contact</a></li>
+                </ul>
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle-btn" aria-label="Toggle Theme" style="background: none; border: none; font-size: 1.3rem; color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none; transition: var(--transition);">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -194,5 +200,30 @@
             </div>
         </div>
     </footer>
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const bodyElement = document.body;
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('portfolio-theme');
+        if (savedTheme === 'sky') {
+            bodyElement.classList.add('theme-sky');
+            themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        } else {
+            themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun"></i>';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            bodyElement.classList.toggle('theme-sky');
+            const isSky = bodyElement.classList.contains('theme-sky');
+            if (isSky) {
+                localStorage.setItem('portfolio-theme', 'sky');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            } else {
+                localStorage.setItem('portfolio-theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun"></i>';
+            }
+        });
+    </script>
 </body>
 </html>
