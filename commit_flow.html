@@ -15,31 +15,31 @@
     <script>
         mermaid.initialize({
             startOnLoad: true,
-            theme: 'neutral', // Use light theme-friendly style
+            theme: 'dark',
             flowchart: {
                 useMaxWidth: true,
                 htmlLabels: true,
                 curve: 'basis'
             },
             themeVariables: {
-                primaryColor: '#bae6fd',
-                primaryTextColor: '#0f172a',
+                primaryColor: '#1e293b',
+                primaryTextColor: '#f8fafc',
                 primaryBorderColor: '#38bdf8',
-                lineColor: '#0284c7',
-                secondaryColor: '#f0f9ff',
-                tertiaryColor: '#f8fafc'
+                lineColor: '#38bdf8',
+                secondaryColor: '#0f172a',
+                tertiaryColor: '#0f172a'
             }
         });
     </script>
     <style>
         :root {
-            --bg-dark: #f0f9ff;
-            --bg-card: rgba(255, 255, 255, 0.75);
-            --border-color: rgba(14, 165, 233, 0.15);
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --primary: hsl(200, 95%, 45%);
-            --secondary: hsl(220, 90%, 50%);
+            --bg-dark: #070a13;
+            --bg-card: rgba(15, 23, 42, 0.5);
+            --border-color: rgba(56, 189, 248, 0.12);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --primary: hsl(195, 90%, 55%);
+            --secondary: hsl(260, 85%, 65%);
             --font-sans: 'Outfit', 'Noto Sans KR', sans-serif;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -98,7 +98,7 @@
             width: 100%;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
             text-align: center;
             position: relative;
         }
@@ -112,7 +112,7 @@
             font-weight: 800;
             letter-spacing: -1px;
             margin-bottom: 0.5rem;
-            background: linear-gradient(90deg, #0284c7, #0ea5e9);
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -125,7 +125,7 @@
 
         /* Flowchart Wrapper */
         .flowchart-wrapper {
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(15, 23, 42, 0.7);
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 2.5rem;
@@ -161,13 +161,13 @@
             text-decoration: none;
             color: var(--text-primary);
             border: 1px solid var(--border-color);
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.02);
             transition: var(--transition);
             cursor: pointer;
         }
 
         .btn-back:hover {
-            background: rgba(14, 165, 233, 0.1);
+            background: rgba(56, 189, 248, 0.08);
             transform: translateY(-2px);
             border-color: var(--primary);
         }
@@ -208,14 +208,18 @@
         <div class="flowchart-wrapper" id="flowchart-container">
             <div class="mermaid">
                 graph TD
-                    A["<strong>89bd326</strong><br><span style='color:#1e3a8a;'>Initial commit</span><br><span style='font-size:0.85em;color:#475569;'>Add self-introduction webpage</span>"] --> B["<strong>fc511d8</strong><br><span style='color:#b91c1c;'>Design Update</span><br><span style='font-size:0.85em;color:#475569;'>Make title large, red & add shimmering neon effect</span>"]
-                    B --> C["<strong>74c0f14</strong><br><span style='color:#0369a1;'>Docs Update</span><br><span style='font-size:0.85em;color:#475569;'>Add git flowchart HTML visualization</span>"]
-                    C --> D["<strong>ef384d9</strong><br><span style='color:#0891b2;'>Theme Update</span><br><span style='font-size:0.85em;color:#475569;'>Change background theme to sky blue</span>"]
+                    A["<strong>89bd326</strong><br><span style='color:#a5b4fc;'>Initial commit</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add self-introduction webpage</span>"] --> B["<strong>fc511d8</strong><br><span style='color:#f472b6;'>Design Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Make title large, red & add shimmering neon effect</span>"]
+                    B --> C["<strong>74c0f14</strong><br><span style='color:#38bdf8;'>Docs Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add git flowchart HTML visualization</span>"]
+                    C --> D["<strong>ef384d9</strong><br><span style='color:#a5b4fc;'>Theme Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Change background theme to sky blue</span>"]
+                    D --> E["<strong>fc9b6c5</strong><br><span style='color:#38bdf8;'>Docs Theme</span><br><span style='font-size:0.85em;color:#94a3b8;'>Update commit flowchart theme to sky blue</span>"]
+                    E --> F["<strong>2e4e387</strong><br><span style='color:#f472b6;'>Design Refine</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add button to index and refine to dark indigo</span>"]
 
-                    style A fill:#dbeafe,stroke:#3b82f6,stroke-width:2px,rx:10px,ry:10px
-                    style B fill:#fee2e2,stroke:#ef4444,stroke-width:2px,rx:10px,ry:10px
-                    style C fill:#e0f2fe,stroke:#0ea5e9,stroke-width:2px,rx:10px,ry:10px
-                    style D fill:#e0f7fa,stroke:#0891b2,stroke-width:2px,rx:10px,ry:10px
+                    style A fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,rx:10px,ry:10px
+                    style B fill:#311042,stroke:#f472b6,stroke-width:2px,rx:10px,ry:10px
+                    style C fill:#0f172a,stroke:#38bdf8,stroke-width:2px,rx:10px,ry:10px
+                    style D fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,rx:10px,ry:10px
+                    style E fill:#0f172a,stroke:#38bdf8,stroke-width:2px,rx:10px,ry:10px
+                    style F fill:#311042,stroke:#f472b6,stroke-width:2px,rx:10px,ry:10px
             </div>
         </div>
 
