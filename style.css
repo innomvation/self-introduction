@@ -170,11 +170,17 @@ body {
 }
 
 .hero-title {
-    font-size: 4.5rem;
+    font-size: 6.5rem;
     font-weight: 800;
     line-height: 1.1;
     margin-bottom: 1.5rem;
     letter-spacing: -2px;
+    color: #ff3333;
+    background: linear-gradient(90deg, #ff0000, #ff4444, #ff8888, #ff4444, #ff0000);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShimmer 3s linear infinite, neonPulse 1.5s ease-in-out infinite alternate;
 }
 
 .hero-subtitle {
@@ -629,7 +635,7 @@ footer p {
 
 @media (max-width: 576px) {
     .hero-title {
-        font-size: 2.8rem;
+        font-size: 3.8rem;
     }
     
     .nav-links {
@@ -642,5 +648,24 @@ footer p {
     
     .section {
         padding: 5rem 0;
+    }
+}
+
+/* Animations for Red Glow & Shimmer */
+@keyframes textShimmer {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes neonPulse {
+    0% {
+        filter: drop-shadow(0 0 2px rgba(255, 0, 0, 0.4)) drop-shadow(0 0 5px rgba(255, 0, 0, 0.2));
+    }
+    100% {
+        filter: drop-shadow(0 0 12px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 25px rgba(255, 0, 0, 0.7)) drop-shadow(0 0 35px rgba(255, 0, 0, 0.5));
     }
 }
