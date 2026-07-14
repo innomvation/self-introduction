@@ -34,6 +34,22 @@ body.theme-sky {
     --accent: #0ea5e9;
 }
 
+/* Integrated theme-mint forest mode overrides */
+body.theme-mint {
+    --bg-dark: #040d0a;
+    --bg-card: rgba(16, 24, 20, 0.6);
+    --bg-card-hover: rgba(16, 24, 20, 0.95);
+    --border-color: rgba(16, 185, 129, 0.15);
+    --text-primary: #ecfdf5;
+    --text-secondary: #a7f3d0;
+    
+    --primary: hsl(150, 80%, 50%);
+    --primary-glow: hsla(150, 80%, 50%, 0.15);
+    --secondary: hsl(170, 75%, 45%);
+    --secondary-glow: hsla(170, 75%, 45%, 0.15);
+    --accent: #10b981;
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -714,4 +730,28 @@ body.theme-sky .form-group textarea {
 body.theme-sky .visual-card {
     background: rgba(15, 23, 42, 0.8); /* Keep code card dark for high syntax readability */
 }
+
+/* Elements transition adjustments for theme-mint forest mode */
+body.theme-mint footer {
+    background-color: #061f17;
+}
+
+body.theme-mint .project-img-placeholder {
+    background: linear-gradient(135deg, #062f21, #064e3b);
+}
+
+body.theme-mint .skill-tag,
+body.theme-mint .project-tags .tag {
+    background: rgba(16, 185, 129, 0.08);
+}
+
+body.theme-mint .form-group input,
+body.theme-mint .form-group textarea {
+    background: rgba(16, 24, 20, 0.7);
+}
+
+body.theme-mint .visual-card {
+    background: rgba(6, 31, 23, 0.8);
+}
+
 

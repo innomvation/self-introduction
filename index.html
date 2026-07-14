@@ -204,25 +204,39 @@
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
         const bodyElement = document.body;
 
+        // 3-way theme state mapping
+        const themes = ['dark', 'sky', 'mint'];
+        let currentThemeIndex = 0;
+
         // Load saved theme
         const savedTheme = localStorage.getItem('portfolio-theme');
-        if (savedTheme === 'sky') {
-            bodyElement.classList.add('theme-sky');
-            themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        if (themes.includes(savedTheme)) {
+            currentThemeIndex = themes.indexOf(savedTheme);
+            applyTheme(savedTheme);
         } else {
-            themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun"></i>';
+            applyTheme('dark');
+        }
+
+        function applyTheme(themeName) {
+            // Remove all themes classes
+            bodyElement.classList.remove('theme-sky', 'theme-mint');
+            
+            if (themeName === 'sky') {
+                bodyElement.classList.add('theme-sky');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon" style="color: #60a5fa;"></i>'; // Sky blue moon
+            } else if (themeName === 'mint') {
+                bodyElement.classList.add('theme-mint');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-leaf" style="color: #34d399;"></i>'; // Green leaf
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun" style="color: #f59e0b;"></i>'; // Indigo sun
+            }
         }
 
         themeToggleBtn.addEventListener('click', () => {
-            bodyElement.classList.toggle('theme-sky');
-            const isSky = bodyElement.classList.contains('theme-sky');
-            if (isSky) {
-                localStorage.setItem('portfolio-theme', 'sky');
-                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
-            } else {
-                localStorage.setItem('portfolio-theme', 'dark');
-                themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun"></i>';
-            }
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            const nextTheme = themes[currentThemeIndex];
+            localStorage.setItem('portfolio-theme', nextTheme);
+            applyTheme(nextTheme);
         });
     </script>
 </body>
