@@ -16,22 +16,27 @@
         // Load initial theme from localStorage to decide mermaid styling
         const savedTheme = localStorage.getItem('portfolio-theme');
         const isSkyTheme = savedTheme === 'sky';
+        const isMintTheme = savedTheme === 'mint';
+
+        let flowTheme = 'dark';
+        if (isSkyTheme) flowTheme = 'neutral';
+        else if (isMintTheme) flowTheme = 'forest';
 
         mermaid.initialize({
             startOnLoad: true,
-            theme: isSkyTheme ? 'neutral' : 'dark', // Adapt flowchart colors initially
+            theme: flowTheme,
             flowchart: {
                 useMaxWidth: true,
                 htmlLabels: true,
                 curve: 'basis'
             },
             themeVariables: {
-                primaryColor: isSkyTheme ? '#bae6fd' : '#1e293b',
+                primaryColor: isSkyTheme ? '#bae6fd' : (isMintTheme ? '#064e3b' : '#1e293b'),
                 primaryTextColor: isSkyTheme ? '#0f172a' : '#f8fafc',
-                primaryBorderColor: isSkyTheme ? '#38bdf8' : '#38bdf8',
-                lineColor: isSkyTheme ? '#0ea5e9' : '#38bdf8',
-                secondaryColor: isSkyTheme ? '#f0f9ff' : '#0f172a',
-                tertiaryColor: isSkyTheme ? '#f8fafc' : '#0f172a'
+                primaryBorderColor: isSkyTheme ? '#38bdf8' : (isMintTheme ? '#10b981' : '#38bdf8'),
+                lineColor: isSkyTheme ? '#0ea5e9' : (isMintTheme ? '#10b981' : '#38bdf8'),
+                secondaryColor: isSkyTheme ? '#f0f9ff' : (isMintTheme ? '#040d0a' : '#0f172a'),
+                tertiaryColor: isSkyTheme ? '#f8fafc' : (isMintTheme ? '#ecfdf5' : '#0f172a')
             }
         });
     </script>
@@ -57,6 +62,17 @@
             --text-secondary: #475569;
             --primary: hsl(200, 95%, 45%);
             --secondary: hsl(220, 90%, 50%);
+        }
+
+        /* Mint theme overrides */
+        body.theme-mint {
+            --bg-dark: #040d0a;
+            --bg-card: rgba(16, 24, 20, 0.75);
+            --border-color: rgba(16, 185, 129, 0.15);
+            --text-primary: #ecfdf5;
+            --text-secondary: #a7f3d0;
+            --primary: hsl(150, 80%, 50%);
+            --secondary: hsl(170, 75%, 45%);
         }
 
         * {
@@ -144,7 +160,7 @@
             font-weight: 800;
             letter-spacing: -1px;
             margin-bottom: 0.5rem;
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            background: linear-gradient(90deg, #38bdf8, #10b981);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -171,6 +187,10 @@
 
         body.theme-sky .flowchart-wrapper {
             background: rgba(255, 255, 255, 0.5);
+        }
+
+        body.theme-mint .flowchart-wrapper {
+            background: rgba(16, 24, 20, 0.7);
         }
 
         /* Customize Mermaid labels & subgraphs */
@@ -213,6 +233,10 @@
             background: rgba(255, 255, 255, 0.5);
         }
 
+        body.theme-mint .btn-back {
+            background: rgba(16, 24, 20, 0.5);
+        }
+
         .btn-back:hover {
             background: rgba(56, 189, 248, 0.08);
             transform: translateY(-2px);
@@ -253,7 +277,7 @@
     <div class="card-container">
         <div class="header">
             <h1 class="title" id="page-title"><i class="fa-solid fa-code-branch" style="margin-right: 10px;"></i>Git Branching Flowchart</h1>
-            <p class="subtitle" id="page-subtitle">테마 분기 및 병합(Merge)이 반영된 프로젝트 흐름도입니다.</p>
+            <p class="subtitle" id="page-subtitle">3중 테마 분기 및 머지(Merge)가 반영된 프로젝트 흐름도입니다.</p>
             <button id="theme-toggle-btn" aria-label="Toggle Theme">
                 <i class="fa-solid fa-cloud-sun"></i>
             </button>
@@ -283,18 +307,26 @@
                     subgraph DarkThemeBranch ["theme-dark / main 브랜치 (검은색)"]
                         F["<strong>2e4e387</strong><br><span style='color:#f472b6;'>Design Refine</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add button to index and refine to dark indigo</span>"]
                         G["<strong>426b5d6</strong><br><span style='color:#38bdf8;'>Docs Theme Refine</span><br><span style='font-size:0.85em;color:#94a3b8;'>Update commit flowchart to dark indigo</span>"]
+                        H["<strong>78d0a0c</strong><br><span style='color:#a5b4fc;'>Docs Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Merge theme-sky and add flowchart switch</span>"]
                         
                         E --> F
                         F --> G
+                        G --> H
                     end
 
-                    subgraph MergedState ["병합 및 통합 완료 (main / theme-dark)"]
-                        H["<strong>986ce27</strong><br><span style='color:#10b981;'>Feature: Theme Merge & Integration</span><br><span style='font-size:0.85em;color:#94a3b8;'>Integrate interactive dual theme switcher (Sky & Dark Indigo)</span>"]
+                    subgraph MintThemeBranch ["theme-mint 브랜치 (민트색)"]
+                        I["<strong>dd457cb</strong><br><span style='color:#10b981;'>Feature: Emerald Mint Theme</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add Emerald mint variables and support 3-way toggle</span>"]
+                        E --> I
                     end
 
-                    %% Merge lines
-                    SkyStart --> H
-                    G --> H
+                    subgraph MergedState ["3중 테마 최종 통합 완료 (main / theme-dark)"]
+                        MergeNode["<strong>3-Way Theme Switcher</strong><br><span style='color:#10b981;font-weight:600;'>Dark Indigo & Sky Blue & Emerald Mint</span>"]
+                    end
+
+                    %% 3-Way Merge lines
+                    SkyStart --> MergeNode
+                    H --> MergeNode
+                    I --> MergeNode
 
                     style A fill:#0f172a,stroke:#3b82f6,stroke-width:2px,rx:10px,ry:10px
                     style B fill:#311042,stroke:#f472b6,stroke-width:2px,rx:10px,ry:10px
@@ -303,9 +335,11 @@
                     style E fill:#0f172a,stroke:#38bdf8,stroke-width:2px,rx:10px,ry:10px
                     style F fill:#311042,stroke:#f472b6,stroke-width:2px,rx:10px,ry:10px
                     style G fill:#0f172a,stroke:#38bdf8,stroke-width:2px,rx:10px,ry:10px
+                    style H fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,rx:10px,ry:10px
+                    style I fill:#062f21,stroke:#10b981,stroke-width:2px,rx:10px,ry:10px
                     
                     style SkyStart fill:#e0f2fe,stroke:#0ea5e9,stroke-width:3px,rx:10px,ry:10px
-                    style H fill:#ecfdf5,stroke:#10b981,stroke-width:3px,rx:10px,ry:10px
+                    style MergeNode fill:#ecfdf5,stroke:#10b981,stroke-width:3px,rx:10px,ry:10px
             </div>
         </div>
 
@@ -318,25 +352,35 @@
         const themeToggleBtn = document.getElementById('theme-toggle-btn');
         const bodyElement = document.body;
 
-        // Apply saved theme on load
-        if (savedTheme === 'sky') {
-            bodyElement.classList.add('theme-sky');
-            themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        const themes = ['dark', 'sky', 'mint'];
+        let currentThemeIndex = 0;
+
+        if (themes.includes(savedTheme)) {
+            currentThemeIndex = themes.indexOf(savedTheme);
+            applyTheme(savedTheme);
         } else {
-            themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun"></i>';
+            applyTheme('dark');
+        }
+
+        function applyTheme(themeName) {
+            bodyElement.classList.remove('theme-sky', 'theme-mint');
+            
+            if (themeName === 'sky') {
+                bodyElement.classList.add('theme-sky');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon" style="color: #60a5fa;"></i>';
+            } else if (themeName === 'mint') {
+                bodyElement.classList.add('theme-mint');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-leaf" style="color: #34d399;"></i>';
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun" style="color: #f59e0b;"></i>';
+            }
         }
 
         themeToggleBtn.addEventListener('click', () => {
-            bodyElement.classList.toggle('theme-sky');
-            const isSky = bodyElement.classList.contains('theme-sky');
-            if (isSky) {
-                localStorage.setItem('portfolio-theme', 'sky');
-                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
-            } else {
-                localStorage.setItem('portfolio-theme', 'dark');
-                themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun"></i>';
-            }
-            // Reload page briefly to update Mermaid's theme initialization properly
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            const nextTheme = themes[currentThemeIndex];
+            localStorage.setItem('portfolio-theme', nextTheme);
+            applyTheme(nextTheme);
             window.location.reload();
         });
     </script>
