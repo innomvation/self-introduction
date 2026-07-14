@@ -13,21 +13,25 @@
     <!-- Mermaid.js for flowchart rendering -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
     <script>
+        // Load initial theme from localStorage to decide mermaid styling
+        const savedTheme = localStorage.getItem('portfolio-theme');
+        const isSkyTheme = savedTheme === 'sky';
+
         mermaid.initialize({
             startOnLoad: true,
-            theme: 'dark',
+            theme: isSkyTheme ? 'neutral' : 'dark', // Adapt flowchart colors initially
             flowchart: {
                 useMaxWidth: true,
                 htmlLabels: true,
                 curve: 'basis'
             },
             themeVariables: {
-                primaryColor: '#1e293b',
-                primaryTextColor: '#f8fafc',
-                primaryBorderColor: '#38bdf8',
-                lineColor: '#38bdf8',
-                secondaryColor: '#0f172a',
-                tertiaryColor: '#0f172a'
+                primaryColor: isSkyTheme ? '#bae6fd' : '#1e293b',
+                primaryTextColor: isSkyTheme ? '#0f172a' : '#f8fafc',
+                primaryBorderColor: isSkyTheme ? '#38bdf8' : '#38bdf8',
+                lineColor: isSkyTheme ? '#0ea5e9' : '#38bdf8',
+                secondaryColor: isSkyTheme ? '#f0f9ff' : '#0f172a',
+                tertiaryColor: isSkyTheme ? '#f8fafc' : '#0f172a'
             }
         });
     </script>
@@ -42,6 +46,17 @@
             --secondary: hsl(260, 85%, 65%);
             --font-sans: 'Outfit', 'Noto Sans KR', sans-serif;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Sky blue theme overrides */
+        body.theme-sky {
+            --bg-dark: #f0f9ff;
+            --bg-card: rgba(255, 255, 255, 0.75);
+            --border-color: rgba(14, 165, 233, 0.15);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --primary: hsl(200, 95%, 45%);
+            --secondary: hsl(220, 90%, 50%);
         }
 
         * {
@@ -62,6 +77,7 @@
             overflow-x: hidden;
             position: relative;
             padding: 2rem;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         /* Glow Backgrounds */
@@ -94,17 +110,33 @@
             border: 1px solid var(--border-color);
             border-radius: 24px;
             padding: 3rem;
-            max-width: 900px;
+            max-width: 950px;
             width: 100%;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
             text-align: center;
             position: relative;
+            transition: var(--transition);
         }
 
         .header {
             margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        /* Theme Toggle floating inside card */
+        #theme-toggle-btn {
+            position: absolute;
+            top: -10px;
+            right: 0;
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
         }
 
         .title {
@@ -134,6 +166,11 @@
             justify-content: center;
             align-items: center;
             overflow-x: auto;
+            transition: var(--transition);
+        }
+
+        body.theme-sky .flowchart-wrapper {
+            background: rgba(255, 255, 255, 0.5);
         }
 
         /* Customize Mermaid labels & subgraphs */
@@ -172,6 +209,10 @@
             cursor: pointer;
         }
 
+        body.theme-sky .btn-back {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
         .btn-back:hover {
             background: rgba(56, 189, 248, 0.08);
             transform: translateY(-2px);
@@ -198,6 +239,10 @@
             .flowchart-wrapper {
                 padding: 1rem;
             }
+            #theme-toggle-btn {
+                position: static;
+                margin-top: 1rem;
+            }
         }
     </style>
 </head>
@@ -208,7 +253,10 @@
     <div class="card-container">
         <div class="header">
             <h1 class="title" id="page-title"><i class="fa-solid fa-code-branch" style="margin-right: 10px;"></i>Git Branching Flowchart</h1>
-            <p class="subtitle" id="page-subtitle">두 개의 테마로 나뉘어 관리되는 프로젝트의 브랜치 분기 흐름도입니다.</p>
+            <p class="subtitle" id="page-subtitle">테마 분기 및 병합(Merge)이 반영된 프로젝트 흐름도입니다.</p>
+            <button id="theme-toggle-btn" aria-label="Toggle Theme">
+                <i class="fa-solid fa-cloud-sun"></i>
+            </button>
         </div>
 
         <div class="flowchart-wrapper" id="flowchart-container">
@@ -227,20 +275,26 @@
                         D --> E
                     end
 
-                    subgraph SkyThemeBranch ["theme-sky 브랜치"]
+                    subgraph SkyThemeBranch ["theme-sky 브랜치 (하늘색)"]
                         SkyStart["<strong>theme-sky</strong> Branch Created<br><span style='color:#38bdf8;font-size:0.9em;font-weight:600;'>하늘색 배경 테마 버전 고정</span>"]
                         E --> SkyStart
                     end
 
-                    subgraph DarkThemeBranch ["theme-dark / main 브랜치"]
+                    subgraph DarkThemeBranch ["theme-dark / main 브랜치 (검은색)"]
                         F["<strong>2e4e387</strong><br><span style='color:#f472b6;'>Design Refine</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add button to index and refine to dark indigo</span>"]
                         G["<strong>426b5d6</strong><br><span style='color:#38bdf8;'>Docs Theme Refine</span><br><span style='font-size:0.85em;color:#94a3b8;'>Update commit flowchart to dark indigo</span>"]
-                        DarkStart["<strong>theme-dark</strong> Branch Created<br><span style='color:#f472b6;font-size:0.9em;font-weight:600;'>딥 인디고 다크 테마 버전 활성</span>"]
                         
                         E --> F
                         F --> G
-                        G --> DarkStart
                     end
+
+                    subgraph MergedState ["병합 및 통합 완료 (main / theme-dark)"]
+                        H["<strong>986ce27</strong><br><span style='color:#10b981;'>Feature: Theme Merge & Integration</span><br><span style='font-size:0.85em;color:#94a3b8;'>Integrate interactive dual theme switcher (Sky & Dark Indigo)</span>"]
+                    end
+
+                    %% Merge lines
+                    SkyStart --> H
+                    G --> H
 
                     style A fill:#0f172a,stroke:#3b82f6,stroke-width:2px,rx:10px,ry:10px
                     style B fill:#311042,stroke:#f472b6,stroke-width:2px,rx:10px,ry:10px
@@ -251,7 +305,7 @@
                     style G fill:#0f172a,stroke:#38bdf8,stroke-width:2px,rx:10px,ry:10px
                     
                     style SkyStart fill:#e0f2fe,stroke:#0ea5e9,stroke-width:3px,rx:10px,ry:10px
-                    style DarkStart fill:#fae8ff,stroke:#d946ef,stroke-width:3px,rx:10px,ry:10px
+                    style H fill:#ecfdf5,stroke:#10b981,stroke-width:3px,rx:10px,ry:10px
             </div>
         </div>
 
@@ -259,5 +313,32 @@
             <i class="fa-solid fa-arrow-left"></i> 포트폴리오 페이지로 가기
         </a>
     </div>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const bodyElement = document.body;
+
+        // Apply saved theme on load
+        if (savedTheme === 'sky') {
+            bodyElement.classList.add('theme-sky');
+            themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        } else {
+            themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun"></i>';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            bodyElement.classList.toggle('theme-sky');
+            const isSky = bodyElement.classList.contains('theme-sky');
+            if (isSky) {
+                localStorage.setItem('portfolio-theme', 'sky');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            } else {
+                localStorage.setItem('portfolio-theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-cloud-sun"></i>';
+            }
+            // Reload page briefly to update Mermaid's theme initialization properly
+            window.location.reload();
+        });
+    </script>
 </body>
 </html>
