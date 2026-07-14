@@ -94,7 +94,7 @@
             border: 1px solid var(--border-color);
             border-radius: 24px;
             padding: 3rem;
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
@@ -136,7 +136,7 @@
             overflow-x: auto;
         }
 
-        /* Customize Mermaid labels */
+        /* Customize Mermaid labels & subgraphs */
         .node label {
             font-family: var(--font-sans) !important;
             font-size: 0.95rem !important;
@@ -148,6 +148,12 @@
 
         .edgePath .path {
             stroke-width: 2.5px !important;
+        }
+
+        .subgraph-title {
+            font-family: var(--font-sans) !important;
+            font-weight: 600 !important;
+            color: var(--text-secondary) !important;
         }
 
         /* Navigation Button */
@@ -201,25 +207,51 @@
 
     <div class="card-container">
         <div class="header">
-            <h1 class="title" id="page-title"><i class="fa-solid fa-code-branch" style="margin-right: 10px;"></i>Git Commit Flowchart</h1>
-            <p class="subtitle" id="page-subtitle">자기소개 프로젝트의 지금까지 커밋 히스토리 흐름도입니다.</p>
+            <h1 class="title" id="page-title"><i class="fa-solid fa-code-branch" style="margin-right: 10px;"></i>Git Branching Flowchart</h1>
+            <p class="subtitle" id="page-subtitle">두 개의 테마로 나뉘어 관리되는 프로젝트의 브랜치 분기 흐름도입니다.</p>
         </div>
 
         <div class="flowchart-wrapper" id="flowchart-container">
             <div class="mermaid">
                 graph TD
-                    A["<strong>89bd326</strong><br><span style='color:#a5b4fc;'>Initial commit</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add self-introduction webpage</span>"] --> B["<strong>fc511d8</strong><br><span style='color:#f472b6;'>Design Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Make title large, red & add shimmering neon effect</span>"]
-                    B --> C["<strong>74c0f14</strong><br><span style='color:#38bdf8;'>Docs Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add git flowchart HTML visualization</span>"]
-                    C --> D["<strong>ef384d9</strong><br><span style='color:#a5b4fc;'>Theme Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Change background theme to sky blue</span>"]
-                    D --> E["<strong>fc9b6c5</strong><br><span style='color:#38bdf8;'>Docs Theme</span><br><span style='font-size:0.85em;color:#94a3b8;'>Update commit flowchart theme to sky blue</span>"]
-                    E --> F["<strong>2e4e387</strong><br><span style='color:#f472b6;'>Design Refine</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add button to index and refine to dark indigo</span>"]
+                    subgraph CommonHistory ["공통 히스토리"]
+                        A["<strong>89bd326</strong><br><span style='color:#a5b4fc;'>Initial commit</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add self-introduction webpage</span>"]
+                        B["<strong>fc511d8</strong><br><span style='color:#f472b6;'>Design Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Make title large, red & add shimmering neon effect</span>"]
+                        C["<strong>74c0f14</strong><br><span style='color:#38bdf8;'>Docs Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add git flowchart HTML visualization</span>"]
+                        D["<strong>ef384d9</strong><br><span style='color:#a5b4fc;'>Theme Update</span><br><span style='font-size:0.85em;color:#94a3b8;'>Change background theme to sky blue</span>"]
+                        E["<strong>fc9b6c5</strong><br><span style='color:#38bdf8;'>Docs Theme</span><br><span style='font-size:0.85em;color:#94a3b8;'>Update commit flowchart theme to sky blue</span>"]
+                        
+                        A --> B
+                        B --> C
+                        C --> D
+                        D --> E
+                    end
 
-                    style A fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,rx:10px,ry:10px
+                    subgraph SkyThemeBranch ["theme-sky 브랜치"]
+                        SkyStart["<strong>theme-sky</strong> Branch Created<br><span style='color:#38bdf8;font-size:0.9em;font-weight:600;'>하늘색 배경 테마 버전 고정</span>"]
+                        E --> SkyStart
+                    end
+
+                    subgraph DarkThemeBranch ["theme-dark / main 브랜치"]
+                        F["<strong>2e4e387</strong><br><span style='color:#f472b6;'>Design Refine</span><br><span style='font-size:0.85em;color:#94a3b8;'>Add button to index and refine to dark indigo</span>"]
+                        G["<strong>426b5d6</strong><br><span style='color:#38bdf8;'>Docs Theme Refine</span><br><span style='font-size:0.85em;color:#94a3b8;'>Update commit flowchart to dark indigo</span>"]
+                        DarkStart["<strong>theme-dark</strong> Branch Created<br><span style='color:#f472b6;font-size:0.9em;font-weight:600;'>딥 인디고 다크 테마 버전 활성</span>"]
+                        
+                        E --> F
+                        F --> G
+                        G --> DarkStart
+                    end
+
+                    style A fill:#0f172a,stroke:#3b82f6,stroke-width:2px,rx:10px,ry:10px
                     style B fill:#311042,stroke:#f472b6,stroke-width:2px,rx:10px,ry:10px
                     style C fill:#0f172a,stroke:#38bdf8,stroke-width:2px,rx:10px,ry:10px
                     style D fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,rx:10px,ry:10px
                     style E fill:#0f172a,stroke:#38bdf8,stroke-width:2px,rx:10px,ry:10px
                     style F fill:#311042,stroke:#f472b6,stroke-width:2px,rx:10px,ry:10px
+                    style G fill:#0f172a,stroke:#38bdf8,stroke-width:2px,rx:10px,ry:10px
+                    
+                    style SkyStart fill:#e0f2fe,stroke:#0ea5e9,stroke-width:3px,rx:10px,ry:10px
+                    style DarkStart fill:#fae8ff,stroke:#d946ef,stroke-width:3px,rx:10px,ry:10px
             </div>
         </div>
 
