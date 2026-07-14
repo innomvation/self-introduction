@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Commit Flowchart | 권혁신</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Mermaid.js for flowchart rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            themeVariables: {
+                primaryColor: '#818cf8',
+                primaryTextColor: '#f3f4f6',
+                primaryBorderColor: '#4f46e5',
+                lineColor: '#f472b6',
+                secondaryColor: '#311042',
+                tertiaryColor: '#1f2937'
+            }
+        });
+    </script>
+    <style>
+        :root {
+            --bg-dark: #0a0b10;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --primary: hsl(250, 85%, 65%);
+            --secondary: hsl(320, 80%, 60%);
+            --font-sans: 'Outfit', 'Noto Sans KR', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 2rem;
+        }
+
+        /* Glow Backgrounds */
+        .bg-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .bg-glow-1 {
+            top: -50px;
+            left: -50px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+        }
+
+        .bg-glow-2 {
+            bottom: -50px;
+            right: -50px;
+            background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+        }
+
+        /* Container */
+        .card-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            position: relative;
+        }
+
+        .header {
+            margin-bottom: 3rem;
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, #ff3366, #ff9933);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        /* Flowchart Wrapper */
+        .flowchart-wrapper {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: auto;
+        }
+
+        /* Customize Mermaid labels */
+        .node label {
+            font-family: var(--font-sans) !important;
+            font-size: 0.95rem !important;
+        }
+
+        .node rect, .node circle, .node polygon {
+            stroke-width: 2px !important;
+        }
+
+        .edgePath .path {
+            stroke-width: 2.5px !important;
+        }
+
+        /* Navigation Button */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.02);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-back:hover {
+            background: var(--border-color);
+            transform: translateY(-2px);
+            border-color: var(--text-secondary);
+        }
+
+        .btn-back i {
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn-back:hover i {
+            transform: translateX(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .card-container {
+                padding: 2rem 1.5rem;
+            }
+            .title {
+                font-size: 1.8rem;
+            }
+            .flowchart-wrapper {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="card-container">
+        <div class="header">
+            <h1 class="title" id="page-title"><i class="fa-solid fa-code-branch" style="margin-right: 10px;"></i>Git Commit Flowchart</h1>
+            <p class="subtitle" id="page-subtitle">자기소개 프로젝트의 지금까지 커밋 히스토리 흐름도입니다.</p>
+        </div>
+
+        <div class="flowchart-wrapper" id="flowchart-container">
+            <div class="mermaid">
+                graph TD
+                    A["<strong>89bd326</strong><br><span style='color:#a5b4fc;'>Initial commit</span><br><span style='font-size:0.85em;color:#9ca3af;'>Add self-introduction webpage</span>"] --> B["<strong>fc511d8</strong><br><span style='color:#f472b6;'>Design Update</span><br><span style='font-size:0.85em;color:#9ca3af;'>Make title large, red & add shimmering neon effect</span>"]
+
+                    style A fill:#1e1b4b,stroke:#818cf8,stroke-width:2px,rx:10px,ry:10px
+                    style B fill:#311042,stroke:#f472b6,stroke-width:2px,rx:10px,ry:10px
+            </div>
+        </div>
+
+        <a href="index.html" class="btn-back" id="btn-back-to-portfolio">
+            <i class="fa-solid fa-arrow-left"></i> 포트폴리오 페이지로 가기
+        </a>
+    </div>
+</body>
+</html>
